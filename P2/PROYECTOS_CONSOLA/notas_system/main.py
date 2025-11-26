@@ -128,5 +128,9 @@ class App:
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
   app=App()
+=======
+  App()
+>>>>>>> b089ef6c5e532afcf47601aa1b79a78263122bd4
 
