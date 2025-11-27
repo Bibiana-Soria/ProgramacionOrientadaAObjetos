@@ -46,3 +46,14 @@ class Operaciones:
         except:    
           return False
         
+    @staticmethod
+    def buscar(id):
+      try:
+        cursor.execute(
+          "select * from operaciones where id=%s",
+          (id,)
+        )
+        conexion.commit()
+        return cursor.fetchall()
+      except:
+        return False

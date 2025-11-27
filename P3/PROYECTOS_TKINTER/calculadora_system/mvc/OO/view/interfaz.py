@@ -59,7 +59,7 @@ class Vista:
         menuBar.add_cascade(label="Operaciones",menu=operacionesMenu)
         operacionesMenu.add_command(label="Agregar",command=lambda:Vista.interfaz_principal(ventana) )
         operacionesMenu.add_command(label="Consultar",command=lambda:Vista.consultar(ventana))
-        operacionesMenu.add_command(label="Cambiar",command=lambda:Vista.cambiar(ventana))
+        operacionesMenu.add_command(label="Cambiar",command=lambda:Vista.buscar(ventana))
         operacionesMenu.add_command(label="Borrar",command=lambda: Vista.eliminar(ventana))
         operacionesMenu.add_separator()
         operacionesMenu.add_command(label="Salir",command=ventana.quit)
@@ -117,10 +117,14 @@ class Vista:
         
         lbl_id=Label(ventana,text="ID de la operación: ")
         lbl_id.pack(pady=5)
+        
+        
         id=IntVar()
-        txt_id=Entry(ventana,textvariable=id,width=5,justify="right")
+        txt_id=Entry(ventana,textvariable=id,width=5,justify="right",state="normal")
         txt_id.focus()
         txt_id.pack(pady=5)
+        
+        operacion=funciones.Funciones.buscar(txt_id.get())
         
         n1=IntVar()
         n2=IntVar()
@@ -129,7 +133,6 @@ class Vista:
         numero1=Entry(ventana,textvariable=n1,width=10,justify="right")
         numero1.focus()
         numero1.pack(side="top",anchor="center")
-        
         lbl_num2=Label(ventana,text="Nuevo numero 2: ")
         lbl_num2.pack(pady=5)     
         numero2=Entry(ventana,textvariable=n2,width=10,justify="right")
@@ -153,8 +156,26 @@ class Vista:
         
         btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
         btn_volver.pack(pady=5)
+    
+    @staticmethod
+    def buscar(ventana):
+        Vista.borrarPantalla(ventana)
         
-        
+        lbl_1=Label(ventana,text=".:: Cambiar una Operacion ::.")
+        lbl_1.pack(pady=10)
        
+       
+        lbl_id=Label(ventana,text="ID de la operación: ")
+        lbl_id.pack(pady=5)
+        id=IntVar()
+        txt_id=Entry(ventana,textvariable=id,width=5,justify="right")
+        txt_id.focus()
+        txt_id.pack(pady=5)
+        
+        btn_buscar=Button(ventana, text="Buscar",justify="center", command=lambda: Vista.cambiar(ventana))
+        btn_buscar.pack(pady=10)
+        
+        btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
+        btn_volver.pack(pady=5)
    
         

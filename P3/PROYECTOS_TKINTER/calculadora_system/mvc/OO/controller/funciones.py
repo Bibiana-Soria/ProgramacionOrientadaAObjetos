@@ -48,3 +48,10 @@ class Funciones:
         else:
             messagebox.showinfo(message="\n\t...No fue posible realizar la acción correctamente, vuelva a intentar...",icon="info")
     
+    @staticmethod
+    def buscar(id):
+        operacion=operaciones.Operaciones.buscar(id)
+        if operacion:
+            return operacion
+        else:
+            messagebox.showinfo(message="No se encontró el id")
