@@ -141,11 +141,11 @@ class View:
     @staticmethod    
     def mostrar_notas(ventana):
         View.borrarPantalla(ventana)
-        lbl_titulo=Label(ventana,text="{nombre} {apellidos}, tus notas son:  ",justify="center")
+        lbl_titulo=Label(ventana,text=f"{nom_usuario} {ap_usuario}, tus notas son:  ",justify="center")
         lbl_titulo.pack(pady=10)
         
         filas=""
-        registros=[("1","100","nota1","Descripcion nota 1","2025-11-24")]
+        registros=controlador_1.Controller.mostrar_notas(id_user)
         num_nota=1
         if len(registros)>0:
             for fila in registros:
@@ -155,13 +155,13 @@ class View:
             messagebox.showinfo(icon="warning",message="No existen notas para este usuario")
         lbl_resultado=Label(ventana,text=f"{filas}")
         lbl_resultado.pack(pady=10)
-        btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana) )
+        btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana,id_user,nom_usuario,ap_usuario) )
         btn_volver.pack(pady=10)
     
     @staticmethod    
     def cambiar_notas(ventana):
         View.borrarPantalla(ventana)
-        lbl_titulo=Label(ventana, text=".::{nombre} {apellido}, vamos a modificar una nota ::.",justify="center")
+        lbl_titulo=Label(ventana, text=f".::{nom_usuario} {ap_usuario}, vamos a modificar una nota ::.",justify="center")
         lbl_titulo.pack(pady=10)
         
         lbl_id=Label(ventana, text="ID de la Nota a Cambiar: ",justify="center")
@@ -183,16 +183,16 @@ class View:
         txt_descripcion=Entry(ventana)
         txt_descripcion.pack(pady=10)
         
-        btn_guardar=Button(ventana,text="Guardar", command= lambda: "")
+        btn_guardar=Button(ventana,text="Guardar", command= lambda: controlador_1.Controller.cambiar_notas(txt_id.get(),txt_nuevo_titulo.get(),txt_descripcion.get()))
         btn_guardar.pack(pady=10)
         
-        btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana) )
+        btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana,id_user,nom_usuario,ap_usuario))
         btn_volver.pack(pady=10)
    
     @staticmethod    
     def eliminar_notas(ventana):
         View.borrarPantalla(ventana)
-        lbl_titulo=Label(ventana, text=".::{nombre} {apellido}, vamos a eliminar una nota ::.",justify="center")
+        lbl_titulo=Label(ventana, text=f".::{nom_usuario} {ap_usuario}, vamos a eliminar una nota ::.",justify="center")
         lbl_titulo.pack(pady=10)
         
         lbl_id=Label(ventana, text="ID de la Nota a eliminar: ",justify="center")
@@ -202,8 +202,11 @@ class View:
         txt_id.pack(pady=10)
         txt_id.focus()
         
-        btn_eliminar=Button(ventana,text="Eliminar", command= lambda: "")
+        btn_eliminar=Button(ventana,text="Eliminar", command= lambda: controlador_1.Controller.eliminar_nota(txt_id.get()))
         btn_eliminar.pack(pady=10)
         
-        btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana) )
+        btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana,id_user,nom_usuario,ap_usuario) )
         btn_volver.pack(pady=10)
+        
+   
+        

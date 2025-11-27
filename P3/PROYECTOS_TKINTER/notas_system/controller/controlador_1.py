@@ -25,6 +25,20 @@ class Controller:
         resultado=nota.Nota.crear(usuario_id,titulo,descripcion)
         Controller.respuesta_sql(resultado)
             
+    @staticmethod
+    def mostrar_notas(usuario_id):
+        registro=nota.Nota.mostrar(usuario_id)
+        return registro
+    
+    @staticmethod
+    def eliminar_nota(id):
+        resultado=nota.Nota.eliminar(id)
+        Controller.respuesta_sql(resultado)
+    
+    @staticmethod
+    def cambiar_notas(id,titulo,descripcion):
+        resultado=nota.Nota.actualizar(id,titulo,descripcion)
+        Controller.respuesta_sql(resultado)    
     
     @staticmethod
     def respuesta_sql(resultado):
@@ -32,4 +46,5 @@ class Controller:
             messagebox.showinfo(message=f" Acción Realizada con Éxito ",icon="info")
         else:
             messagebox.showinfo(message="\n\t...No fue posible realizar la acción correctamente, vuelva a intentar...",icon="info")
+    
     
