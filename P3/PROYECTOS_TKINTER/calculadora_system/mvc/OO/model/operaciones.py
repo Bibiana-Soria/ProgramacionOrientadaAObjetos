@@ -45,15 +45,15 @@ class Operaciones:
           return True  
         except:    
           return False
-        
+      
     @staticmethod
-    def buscar(id):
+    def consultar_id(id):
       try:
         cursor.execute(
           "select * from operaciones where id=%s",
           (id,)
         )
         conexion.commit()
-        return cursor.fetchall()
+        return cursor.fetchone()
       except:
-        return False
+        return []

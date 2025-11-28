@@ -59,28 +59,33 @@ class Vista:
         menuBar.add_cascade(label="Operaciones",menu=operacionesMenu)
         operacionesMenu.add_command(label="Agregar",command=lambda:Vista.interfaz_principal(ventana) )
         operacionesMenu.add_command(label="Consultar",command=lambda:Vista.consultar(ventana))
-        operacionesMenu.add_command(label="Cambiar",command=lambda:Vista.buscar(ventana))
-        operacionesMenu.add_command(label="Borrar",command=lambda: Vista.eliminar(ventana))
+        operacionesMenu.add_command(label="Cambiar",command=lambda:Vista.buscar_id(ventana,"cambiar"))
+        operacionesMenu.add_command(label="Borrar",command=lambda: Vista.buscar_id(ventana,"borrar"))
         operacionesMenu.add_separator()
         operacionesMenu.add_command(label="Salir",command=ventana.quit)
     
     # Vista de eliminar operaciones    
     @staticmethod
-    def eliminar(ventana):
-        Vista.borrarPantalla(ventana)
-        Vista.menuPrincipal(ventana)
-        lbl_1=Label(ventana,text="..:: Eliminar una operacion ::..")
-        lbl_1.pack(pady=10)
-        lbl_2=Label(ventana,text="ID de la Operacion: ")
-        lbl_2.pack(pady=5)
-        id=IntVar()
-        txt_id_eliminar=Entry(ventana,textvariable=id,width=5)
-        txt_id_eliminar.focus()
-        txt_id_eliminar.pack(pady=5)
-        btn_eliminar=Button(ventana,text="Eliminar",command= lambda: funciones.Funciones.eliminar(id.get()))
-        btn_eliminar.pack()
-        btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
-        btn_volver.pack()
+    def eliminar_id(ventana,id_):
+        registro=operaciones.Operaciones.consultar_id(id_)
+        if registro is None:
+            messagebox.showinfo(icon="info",message="No existe esta operacion en la BD")
+        else:
+            Vista.borrarPantalla(ventana)
+            Vista.menuPrincipal(ventana)
+            lbl_1=Label(ventana,text="..:: Eliminar una operacion ::..")
+            lbl_1.pack(pady=10)
+            lbl_2=Label(ventana,text="ID de la Operacion: ")
+            lbl_2.pack(pady=5)
+            id=IntVar()
+            txt_id_eliminar=Entry(ventana,textvariable=id,width=5)
+            id.set(id_)
+            txt_id_eliminar.focus()
+            txt_id_eliminar.pack(pady=5)
+            btn_eliminar=Button(ventana,text="Eliminar",command= lambda: funciones.Funciones.eliminar(id.get()))
+            btn_eliminar.pack()
+            btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
+            btn_volver.pack()
         
     # Vista de Consultar operaciones   
     @staticmethod
@@ -108,74 +113,77 @@ class Vista:
     
     # vista de cambiar operaciones
     @staticmethod
-    def cambiar(ventana):
+    def cambiar_id(ventana,id_):
+        registro=operaciones.Operaciones.consultar_id(id_)
+        if registro is None:
+            messagebox.showinfo(icon="info",message="No existe esta operacion en la BD")
+        else:
+            Vista.borrarPantalla(ventana)
+            Vista.menuPrincipal(ventana)
+        
+            lbl_1=Label(ventana,text=".:: Cambiar una Operacion ::.")
+            lbl_1.pack(pady=10)
+            lbl_id=Label(ventana,text="ID de la operación: ")
+            lbl_id.pack(pady=5)
+            id=IntVar()
+            txt_id=Entry(ventana,textvariable=id,width=5,justify="right",state="readonly")
+            id.set(id_)
+            txt_id.focus()
+            txt_id.pack(pady=5)
+            
+            lbl_num1=Label(ventana,text="Nuevo numero 1: ")
+            lbl_num1.pack(pady=5)
+            n1=IntVar()
+            numero1=Entry(ventana,textvariable=n1,width=10,justify="right")
+            n1.set(registro[2])
+            numero1.pack(pady=5)           
+            
+            lbl_num2=Label(ventana,text="Nuevo numero 2: ")
+            lbl_num2.pack(pady=5) 
+            n2=IntVar()
+            numero2=Entry(ventana,textvariable=n2,width=10,justify="right")
+            n2.set(registro[3])
+            numero2.pack(pady=5)
+                
+            lbl_signo=Label(ventana,text="Nuevo Signo: ")
+            lbl_signo.pack(pady=5)
+            signo=StringVar()
+            txt_nuevo_signo=Entry(ventana,textvariable=signo,width=10,justify="center")
+            signo.set(registro[4])
+            txt_nuevo_signo.pack(pady=5)
+        
+            lbl_resultado=Label(ventana,text="Nuevo resultado: ")
+            lbl_resultado.pack(pady=5)
+        
+            resultado=DoubleVar()
+            txt_nuevo_resultado=Entry(ventana,textvariable=resultado,width=10,justify="right")
+            resultado.set(registro[5])
+            txt_nuevo_resultado.pack(pady=5)
+        
+            btn_guardar=Button(ventana,text="Guardar",command=lambda:funciones.Funciones.actualizar(n1.get(),n2.get(),signo.get(),resultado.get(),id.get()))
+            btn_guardar.pack(pady=5)
+        
+            btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
+            btn_volver.pack(pady=5)
+    
+    @staticmethod
+    def buscar_id(ventana,tipo):
         Vista.borrarPantalla(ventana)
         Vista.menuPrincipal(ventana)
         
-        lbl_1=Label(ventana,text=".:: Cambiar una Operacion ::.")
-        lbl_1.pack(pady=10)
-        
-        lbl_id=Label(ventana,text="ID de la operación: ")
-        lbl_id.pack(pady=5)
-        
-        
-        id=IntVar()
-        txt_id=Entry(ventana,textvariable=id,width=5,justify="right",state="normal")
-        txt_id.focus()
-        txt_id.pack(pady=5)
-        
-        operacion=funciones.Funciones.buscar(txt_id.get())
-        
-        n1=IntVar()
-        n2=IntVar()
-        lbl_num1=Label(ventana,text="Nuevo numero 1: ")
-        lbl_num1.pack(pady=5)
-        numero1=Entry(ventana,textvariable=n1,width=10,justify="right")
-        numero1.focus()
-        numero1.pack(side="top",anchor="center")
-        lbl_num2=Label(ventana,text="Nuevo numero 2: ")
-        lbl_num2.pack(pady=5)     
-        numero2=Entry(ventana,textvariable=n2,width=10,justify="right")
-        numero2.pack(side="top",anchor="center")
-        
-        lbl_signo=Label(ventana,text="Nuevo Signo: ")
-        lbl_signo.pack(pady=5)
-        signo=StringVar()
-        txt_nuevo_signo=Entry(ventana,textvariable=signo,width=10,justify="center")
-        txt_nuevo_signo.pack(pady=5)
-        
-        lbl_resultado=Label(ventana,text="Nuevo resultado: ")
-        lbl_resultado.pack(pady=5)
-        
-        resultado=DoubleVar()
-        txt_nuevo_resultado=Entry(ventana,textvariable=resultado,width=10,justify="right")
-        txt_nuevo_resultado.pack(pady=5)
-        
-        btn_guardar=Button(ventana,text="Guardar",command=lambda:funciones.Funciones.actualizar(n1.get(),n2.get(),signo.get(),resultado.get(),id.get()))
-        btn_guardar.pack(pady=5)
-        
-        btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
-        btn_volver.pack(pady=5)
-    
-    @staticmethod
-    def buscar(ventana):
-        Vista.borrarPantalla(ventana)
-        
-        lbl_1=Label(ventana,text=".:: Cambiar una Operacion ::.")
+        lbl_1=Label(ventana,text=".:: Buscar una Operacion ::.")
         lbl_1.pack(pady=10)
        
        
-        lbl_id=Label(ventana,text="ID de la operación: ")
+        lbl_id=Label(ventana,text="ID de la operación a buscar: ")
         lbl_id.pack(pady=5)
         id=IntVar()
         txt_id=Entry(ventana,textvariable=id,width=5,justify="right")
         txt_id.focus()
         txt_id.pack(pady=5)
         
-        btn_buscar=Button(ventana, text="Buscar",justify="center", command=lambda: Vista.cambiar(ventana))
-        btn_buscar.pack(pady=10)
-        
-        btn_volver=Button(ventana,text="Volver",command=lambda: Vista.interfaz_principal(ventana))
-        btn_volver.pack(pady=5)
-   
+        if tipo=="cambiar":
+            Button(ventana,text="Buscar",command=lambda: Vista.cambiar_id(ventana, id.get(),)).pack(pady=5)
+        elif tipo=="borrar":
+            Button(ventana,text="Buscar",command=lambda: Vista.eliminar_id(ventana, id.get(),)).pack(pady=5)
         

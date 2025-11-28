@@ -55,3 +55,4 @@ class Funciones:
             return operacion
         else:
             messagebox.showinfo(message="No se encontró el id")
+            
