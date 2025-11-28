@@ -3,7 +3,6 @@ from conexionBD import *
 import hashlib
 import datetime
 
-
 class Usuario:
     @staticmethod
     def registrar(nombre,apellidos,email,password):

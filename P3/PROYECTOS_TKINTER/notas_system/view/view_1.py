@@ -208,5 +208,6 @@ class View:
         btn_volver=Button(ventana,text="Volver",command=lambda: View.menu_notas(ventana,id_user,nom_usuario,ap_usuario) )
         btn_volver.pack(pady=10)
         
+        
    
         

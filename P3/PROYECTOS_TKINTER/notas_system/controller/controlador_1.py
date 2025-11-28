@@ -46,5 +46,4 @@ class Controller:
             messagebox.showinfo(message=f" Acción Realizada con Éxito ",icon="info")
         else:
             messagebox.showinfo(message="\n\t...No fue posible realizar la acción correctamente, vuelva a intentar...",icon="info")
-    
-    
+     
