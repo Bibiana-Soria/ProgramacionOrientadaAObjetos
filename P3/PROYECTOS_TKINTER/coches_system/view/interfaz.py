@@ -131,7 +131,9 @@ class Vista:
             txt_carga=Entry(ventana)
             txt_carga.pack(pady=3)
             
-        
+        btn_guardar=Button(ventana,text="Guardar",command=lambda:"",justify="center")
+        btn_guardar.pack(pady=10)
+
         btn_regresar=Button(ventana,text="Regresar",justify="center",command=lambda:Vista.menu_acciones(ventana,tipo))
         btn_regresar.pack(pady=10)
     
