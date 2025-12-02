@@ -1,5 +1,5 @@
 """
-1°ro Diciembre
+1 Diciembre
 1)Implementación de MVC
 2)POO
 3) INTERFACES
@@ -15,4 +15,19 @@ Productos entregables:
     *Modulo principal "main"
     *Interaccion con las interfaces
     *Nombre del commit: commit_01_12_25
+
+2 Diciembre
+1)INTERFACES
+    1.1 insertar_camionetas()
+    1.2 consultar_camionetas()
+    1.3 cambiar_camionetas()
+    1.4 borrar_camionetas()
+    2.1 insertar_camiones()
+    2.2 consultar_camiones()
+    2.3 cambiar_camiones()
+    2.4 borrar_camimones()
+    
+Productos entregables:
+    * Interacción con todas las interfaces
+    *Nombre del commit: "commit_02_12_25"
 """
