@@ -349,8 +349,7 @@ class Vista:
         lbl_resultado.pack(pady=10)
         btn_regresar=Button(ventana,text="Regresar",justify="center",command=lambda:Vista.menu_acciones(ventana,"Camionetas"))
         btn_regresar.pack(pady=10)
-        
-            
+               
     @staticmethod
     def eliminar_camionetas(ventana):
         Vista.borrarPantalla(ventana)
