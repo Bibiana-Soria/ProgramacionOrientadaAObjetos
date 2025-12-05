@@ -75,3 +75,36 @@ class controlador_camionetas:
     def buscar_camionetas(id_):
         resultado=cochesBD.Camionetas.buscar(id_)
         return resultado        
+    
+class controlador_camiones:
+    @staticmethod
+    def respuesta_sql(resultado): 
+        if resultado:
+            messagebox.showinfo(message=f" Acción Realizada con Éxito ",icon="info")
+        else:
+            messagebox.showinfo(message="\n\t...No fue posible realizar la acción correctamente, vuelva a intentar...",icon="info")   
+            
+    @staticmethod
+    def insertar_camiones(marca,color,modelo,velocidad,caballaje,plazas,eje, capacidadCarga):
+        resultado=cochesBD.Camiones.insertar(marca,color,modelo,velocidad,caballaje,plazas,eje,capacidadCarga)
+        controlador_coches.respuesta_sql(resultado)
+        
+    @staticmethod
+    def consultar_camiones():
+        registros=cochesBD.Camiones.consultar()
+        return registros
+    
+    @staticmethod
+    def actualizar_camiones(marca,color,modelo,velocidad,caballaje,plazas,eje,capacidadCarga,id_):
+        resultado=cochesBD.Camiones.actualizar(marca,color,modelo,velocidad,caballaje,plazas,eje,capacidadCarga,id_)
+        controlador_coches.respuesta_sql(resultado)
+    
+    @staticmethod
+    def eliminar_camiones(id_):
+        resultado=cochesBD.Camiones.eliminar(id_)
+        controlador_coches.respuesta_sql(resultado)
+    
+    @staticmethod
+    def buscar_camiones(id_):
+        resultado=cochesBD.Camiones.buscar(id_)
+        return resultado        

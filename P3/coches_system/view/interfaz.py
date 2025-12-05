@@ -501,7 +501,7 @@ class Vista:
         txt_carga=Entry(ventana)
         txt_carga.pack(pady=3)
         
-        btn_guardar=Button(ventana,text="Guardar",command=lambda:"",justify="center")
+        btn_guardar=Button(ventana,text="Guardar",command=lambda: controlador.controlador_camiones.insertar_camiones(txt_marca.get(),txt_color.get(),txt_modelo.get(),txt_velocidad.get(),txt_caballaje.get(),txt_plazas.get(),txt_eje.get(),txt_carga.get()),justify="center")
         btn_guardar.pack(pady=10)
 
         btn_regresar=Button(ventana,text="Regresar",justify="center",command=lambda:Vista.menu_acciones(ventana,"Camiones"))
@@ -514,12 +514,12 @@ class Vista:
         lbl_titulo=Label(ventana,text=f"..:: Consultar Camiones ::..",justify="center")
         lbl_titulo.pack(pady=5)
         
-        registros=[(1,"Nissan","Blanco","2020",200,50,5,4,1000)]
+        registros=controlador.controlador_camiones.consultar_camiones()
         filas=""
         num_auto=1
         if len(registros)>0:
             for fila in registros:
-                filas=filas+f" Camion: {num_auto} \nID: {fila[0]}.- Marca: {fila[1]} Color: {fila[2]} \n Modelo {fila[3]} Velocidad: {fila[4]} \n Caballaje: {fila[5]} Plazas {fila[6]} Eje: {fila[7]} Capacidad de Carga: {fila[8]}" 
+                filas=filas+f" \nCamion: {num_auto} \nID: {fila[0]} Marca: {fila[1]} \nColor: {fila[2]} Modelo {fila[3]} \nVelocidad: {fila[4]} Caballaje: {fila[5]} \nPlazas {fila[6]} Eje: {fila[7]} \nCapacidad de Carga: {fila[8]}" 
                 num_auto+=1
         else:
             messagebox.showinfo(icon="warning",message="No existen datos para mostrar")
@@ -531,10 +531,10 @@ class Vista:
         btn_regresar.pack(pady=10)
           
     @staticmethod
-    def cambiar_camiones(ventana):
+    def cambiar_camiones(ventana,id_):
         Vista.borrarPantalla(ventana)
         
-        registro=""
+        registro=controlador.controlador_camiones.buscar_camiones(id_)
         if registro is None:
             messagebox.showinfo(icon="info",message="No existe en la BD")
         else:
@@ -544,9 +544,11 @@ class Vista:
 
             lbl_id=Label(ventana,text="ID: ")
             lbl_id.pack(pady=5)
+            
             id=IntVar()
             txt_id=Entry(ventana,textvariable=id,width=5,justify="right",state="readonly")
-            txt_id.focus()
+            txt_id=Entry(ventana,textvariable=id,width=5,justify="right",state="readonly")
+            id.set(id_)
             txt_id.pack(pady=3)
             
             lbl_marca=Label(ventana,text="Marca: ",justify="center")
@@ -591,17 +593,17 @@ class Vista:
             txt_carga=Entry(ventana)
             txt_carga.pack(pady=3)
             
-            btn_guardar=Button(ventana,text="Guardar",command=lambda:"",justify="center")
+            btn_guardar=Button(ventana,text="Guardar",command=lambda:controlador.controlador_camiones.actualizar_camiones(txt_marca.get(),txt_color.get(),txt_modelo.get(),txt_velocidad.get(),txt_potencia.get(),txt_plazas.get(),txt_eje.get(),txt_carga.get(),id.get()),justify="center")
             btn_guardar.pack(pady=10)
 
             btn_regresar=Button(ventana,text="Regresar",command=lambda:Vista.menu_acciones(ventana,"Camiones"),justify="center")
             btn_regresar.pack(pady=10)
     
     @staticmethod
-    def eliminar_camiones(ventana):
+    def eliminar_camiones(ventana,id_):
         Vista.borrarPantalla(ventana)
         
-        registro=""
+        registro=controlador.controlador_camiones.buscar_camiones(id_)
         if registro is None:
             messagebox.showinfo(icon="info",message="No existen esta registros la BD")
         else:
@@ -617,7 +619,7 @@ class Vista:
             txt_id_eliminar.focus()
             txt_id_eliminar.pack(pady=5)
 
-            btn_eliminar=Button(ventana,text="Eliminar",command=lambda:"",justify="center")
+            btn_eliminar=Button(ventana,text="Eliminar",command=lambda:controlador.controlador_camiones.eliminar_camiones(id_),justify="center")
             btn_eliminar.pack(pady=10)
 
             btn_regresar=Button(ventana,text="Regresar",command=lambda:Vista.menu_acciones(ventana,"Camiones"),justify="center")
